@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#11152b" />
+    <meta name="description" content="Caregiver dashboard preview for the Smart Baby Monitoring System classroom prototype." />
+    <link rel="icon" type="image/svg+xml" href="/assets/little-monitor-logo.svg" />
+    <title>Little Monitor — Caregiver preview</title>
+    <script>
+      try {
+        if (localStorage.getItem('little-monitor-sidebar-collapsed') === 'true') {
+          document.documentElement.classList.add('sidebar-collapsed');
+        }
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <div class="sidebar-brand-row">
+          <a class="brand" href="#home" aria-label="Little Monitor home">
+            <span class="brand-mark" aria-hidden="true"><img src="/assets/little-monitor-logo.svg" alt="" /></span>
+            <span class="brand-name"><strong>little monitor</strong><small>room check-in</small></span>
+          </a>
+          <button class="sidebar-collapse-button" id="sidebar-toggle" type="button" aria-label="Collapse navigation" aria-controls="sidebar" aria-expanded="true" data-tooltip="Collapse navigation">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>
+          </button>
+        </div>
+
+        <p class="nav-label">YOUR MONITOR</p>
+        <nav class="side-nav" aria-label="Monitor pages">
+          <button class="nav-item active" data-screen="home" data-tooltip="Overview" aria-label="Overview" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5v9a1 1 0 0 1-1 1h-5v-6h-5v6H4.5a1 1 0 0 1-1-1z"/></svg>
+            <span>Overview</span>
+          </button>
+          <button class="nav-item" data-screen="history" data-tooltip="Event history" aria-label="Event history">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16M4 12h16M4 18.5h10"/><circle cx="3.8" cy="5.5" r=".7"/><circle cx="3.8" cy="12" r=".7"/><circle cx="3.8" cy="18.5" r=".7"/></svg>
+            <span>Event history</span><span class="nav-count" id="history-count">3</span>
+          </button>
+          <button class="nav-item" data-screen="settings" data-tooltip="Settings" aria-label="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="m19.4 13.8 1.2.9-1.5 2.6-1.4-.6a8 8 0 0 1-1.8 1l-.2 1.5h-3l-.2-1.5a8 8 0 0 1-1.8-1l-1.4.6-1.5-2.6 1.2-.9a7 7 0 0 1 0-2l-1.2-.9 1.5-2.6 1.4.6a8 8 0 0 1 1.8-1l.2-1.5h3l.2 1.5a8 8 0 0 1 1.8 1l1.4-.6 1.5 2.6-1.2.9a7 7 0 0 1 0 2Z" transform="translate(-1.1 -1.1) scale(1.09)"/></svg>
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="device-mini" id="sidebar-device" role="group" aria-label="Nursery preview status, sample only" data-tooltip="Nursery preview · no physical monitor connected">
+            <span class="device-mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7h7M8.5 10h7M8.5 16.5h3"/></svg></span>
+            <span><strong id="sidebar-device-title">Nursery preview</strong><small><i class="status-dot preview-dot" id="sidebar-device-dot"></i><span id="sidebar-device-status">Preview only · no device</span></small></span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><img src="/assets/little-monitor-logo.svg" alt="" /></span><strong>little monitor</strong></div>
+          <div class="topbar-spacer"></div>
+          <span class="demo-pill" id="mode-pill"><span class="demo-dot"></span><span id="mode-label">Sample preview</span></span>
+          <span class="quiet-pill" id="quiet-pill" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.1A8.4 8.4 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"/></svg><span class="quiet-full-label">Quiet hours</span><span class="quiet-short-label" aria-hidden="true">Quiet</span></span>
+        </header>
+
+        <section class="screen active" id="screen-home" aria-labelledby="page-title">
+          <div class="page-heading dashboard-heading">
+            <div><h1 id="page-title" tabindex="-1">Nursery</h1></div>
+            <div class="dashboard-actions"><button class="text-button" id="refresh-button" type="button" aria-label="Refresh sample readings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.7-3L4 10M4 5v5h5M4 13a8 8 0 0 0 14.7 3L20 14m0 5v-5h-5"/></svg><span>Refresh</span></button></div>
+          </div>
+
+          <div class="hero-panel visual-hero" id="hero-panel">
+            <div class="hero-copy" aria-live="polite">
+              <span class="hero-status" id="hero-status"><i class="live-indicator"></i><span>PREVIEW ACTIVE</span></span>
+              <h2 id="hero-title">Room preview is ready</h2>
+              <p id="hero-message">Sample room readings are shown below. No audio is recorded.</p>
+              <p class="updated-line"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><span><span id="updated-label">Sample updated</span> <strong id="last-updated">just now</strong></span></p>
+              <div class="alert-actions" id="alert-actions" hidden>
+                <p id="alert-next-step"><strong>Next step:</strong> Follow your usual room-check routine. This sample event does not confirm its cause.</p>
+                <div><button class="button-primary" id="acknowledge-alert" type="button">Mark reviewed</button><button class="link-button" id="open-alert-history" type="button">View event history</button></div>
+              </div>
+            </div>
+            <div class="nursery-scene" id="nursery-scene">
+              <svg class="nursery-art" viewBox="0 0 560 300" role="img" aria-label="A softly illustrated nursery with a crib, window, and night light">
+                <defs>
+                  <linearGradient id="wall-gradient" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#34355f"/><stop offset="1" stop-color="#25284c"/></linearGradient>
+                  <linearGradient id="window-gradient" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#34427d"/><stop offset="1" stop-color="#5866a2"/></linearGradient>
+                  <clipPath id="window-clip"><rect x="58" y="42" width="156" height="124" rx="25"/></clipPath>
+                </defs>
+                <rect class="room-wall" x="16" y="12" width="528" height="270" rx="30" fill="url(#wall-gradient)"/>
+                <rect x="45" y="28" width="182" height="151" rx="31" fill="#444779"/>
+                <rect x="58" y="42" width="156" height="124" rx="25" fill="url(#window-gradient)"/>
+                <g clip-path="url(#window-clip)">
+                  <circle cx="166" cy="77" r="28" fill="#ffd36f" class="scene-moon"/>
+                  <circle cx="177" cy="66" r="23" fill="#3f4d88"/>
+                  <path class="window-hill" d="M45 140q48-56 94-15t95-6v60H45Z" fill="#6386a0"/>
+                  <path d="M55 43v124m82-124v124" stroke="#eef5ed" stroke-width="5"/>
+                </g>
+                <path class="curtain" d="M50 34q24 8 13 81t-10 71h20V34Zm174 0q-25 8-14 81t10 71h-20V34Z" fill="#b8669a"/>
+                <path d="m92 62 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Zm47 10 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" fill="#fff7d9"/>
+                <rect class="floor" x="17" y="215" width="526" height="67" rx="0" fill="#51436f"/>
+                <ellipse cx="350" cy="245" rx="143" ry="25" fill="#665785"/>
+                <rect x="235" y="126" width="218" height="97" rx="25" fill="#b496d3"/>
+                <rect x="249" y="143" width="190" height="70" rx="22" fill="#34375b"/>
+                <path d="M242 143v72m201-72v72M272 154v58m35-58v58m35-58v58m35-58v58m35-58v58" stroke="#d4b5ee" stroke-width="7" stroke-linecap="round"/>
+                <path class="crib-blanket" d="M278 181q28-21 65-4t67 0v38H278Z" fill="#62d7c5"/>
+                <ellipse class="bear-body" cx="353" cy="171" rx="29" ry="21" fill="#e8bd8d"/>
+                <circle cx="351" cy="148" r="21" fill="#efc99e"/>
+                <circle cx="336" cy="132" r="9" fill="#efc99e"/><circle cx="367" cy="132" r="9" fill="#efc99e"/>
+                <circle cx="344" cy="148" r="2" fill="#725741"/><circle cx="358" cy="148" r="2" fill="#725741"/>
+                <path d="M348 155q4 4 8 0" fill="none" stroke="#725741" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="338" cy="154" r="3" fill="#e89f8b"/><circle cx="365" cy="154" r="3" fill="#e89f8b"/>
+                <rect x="440" y="166" width="63" height="54" rx="13" fill="#9866b5"/>
+                <path d="M448 163h47" stroke="#cba3de" stroke-width="8" stroke-linecap="round"/>
+                <path class="lamp-glow" d="M459 110q-22 23-19 47h48q4-24-18-47Z" fill="#ffd36f"/>
+                <path d="M464 157v8m-9 0h18" stroke="#a97853" stroke-width="5" stroke-linecap="round"/>
+                <rect x="90" y="186" width="44" height="28" rx="11" fill="#b4cbb4"/>
+                <path d="M111 187q-23-13-13-25 13-9 16 22 4-31 20-25 10 13-21 28Z" fill="#87ad8b"/>
+                <circle cx="91" cy="215" r="5" fill="#bd8d69"/><circle cx="135" cy="215" r="5" fill="#bd8d69"/>
+              </svg>
+              <button class="scene-hotspot scene-temperature" type="button" data-reading="temperature" aria-label="Open temperature details, 23.4 degrees Celsius"><span class="hotspot-value">23.4°</span><span class="hotspot-pulse" aria-hidden="true"></span></button>
+              <button class="scene-hotspot scene-humidity" type="button" data-reading="humidity" aria-label="Open humidity details, 56 percent"><span class="hotspot-value">56%</span><span class="hotspot-pulse" aria-hidden="true"></span></button>
+              <button class="scene-hotspot scene-device" type="button" data-reading="device" aria-label="Open monitor device status"><span class="device-signal" aria-hidden="true"><i></i><i></i><i></i></span></button>
+              <button class="scene-lamp" id="toggle-lamp" type="button" aria-pressed="true" aria-label="Turn off the demo nursery lamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6m-5 3h4m-5-6a7 7 0 1 1 6 0c-.7.5-1 1.1-1 2H10c0-.9-.3-1.5-1-2Z"/></svg><span class="visually-hidden" id="lamp-label">Demo lamp on</span></button>
+              <span class="scene-caption">Tap a room marker</span>
+            </div>
+          </div>
+          <div class="connection-banner" id="connection-banner" role="status" aria-live="polite" hidden><div><strong id="connection-banner-title"></strong><p id="connection-banner-message"></p></div><button class="button-secondary" id="retry-connection" type="button" hidden>Retry connection</button></div>
+          <div class="environment-alert" id="environment-alert" role="status" aria-live="polite" hidden><span class="environment-alert-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg></span><span id="environment-alert-copy"></span><button class="link-button" id="review-environment-ranges" type="button">Review sample ranges</button></div>
+
+          <div class="section-heading"><div><h2>Room readings</h2><p>Tap a gauge to explore</p></div><span class="reading-time"><i class="status-dot preview-dot" id="freshness-dot"></i><span id="reading-age">Preview · just now</span></span></div>
+          <div class="readings-grid">
+            <article class="reading-card temperature-card" role="button" tabindex="0" data-reading="temperature" aria-haspopup="dialog" aria-controls="reading-detail" aria-label="View temperature details and trend">
+              <div class="gauge-wrap"><svg class="metric-gauge temp-gauge" viewBox="0 0 88 88" aria-hidden="true"><circle class="gauge-track" cx="44" cy="44" r="36"/><circle class="gauge-progress" id="temperature-gauge" cx="44" cy="44" r="36" style="stroke-dashoffset:94"/></svg><div class="gauge-reading"><span class="reading-value"><span id="temp-value">23.4</span><small>°C</small></span><span class="gauge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 14.8V5a3 3 0 0 0-6 0v9.8a5 5 0 1 0 6 0Z"/><path d="M11 8v9"/></svg></span></div></div>
+              <div class="reading-info"><div class="reading-info-top"><p class="reading-label">Temperature</p><span class="reading-state good">In range</span></div><p class="reading-foot">18–30° demo band</p><span class="mini-range"><i style="width:58%"></i></span></div>
+            </article>
+            <article class="reading-card humidity-card" role="button" tabindex="0" data-reading="humidity" aria-haspopup="dialog" aria-controls="reading-detail" aria-label="View humidity details and trend">
+              <div class="gauge-wrap"><svg class="metric-gauge humidity-gauge" viewBox="0 0 88 88" aria-hidden="true"><circle class="gauge-track" cx="44" cy="44" r="36"/><circle class="gauge-progress" id="humidity-gauge" cx="44" cy="44" r="36" style="stroke-dashoffset:99"/></svg><div class="gauge-reading"><span class="reading-value"><span id="humidity-value">56</span><small>%</small></span><span class="gauge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg></span></div></div>
+              <div class="reading-info"><div class="reading-info-top"><p class="reading-label">Humidity</p><span class="reading-state good">In range</span></div><p class="reading-foot">30–70% demo band</p><span class="mini-range"><i style="width:56%"></i></span></div>
+            </article>
+            <article class="reading-card light-card" role="button" tabindex="0" data-reading="light" aria-haspopup="dialog" aria-controls="reading-detail" aria-label="View ambient light details and trend">
+              <div class="gauge-wrap"><svg class="metric-gauge light-gauge" viewBox="0 0 88 88" aria-hidden="true"><circle class="gauge-track" cx="44" cy="44" r="36"/><circle class="gauge-progress" id="light-gauge" cx="44" cy="44" r="36" style="stroke-dashoffset:131"/></svg><div class="gauge-reading"><span class="reading-value"><span id="light-value">42</span><small>lux</small></span><span class="gauge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span></div></div>
+              <div class="reading-info"><div class="reading-info-top"><p class="reading-label">Room light</p><span class="reading-state neutral">Lamp on</span></div><p class="reading-foot">Tap lamp in the scene</p><span class="mini-range"><i style="width:42%"></i></span></div>
+            </article>
+            <article class="reading-card device-card" role="button" tabindex="0" data-reading="device" aria-haspopup="dialog" aria-controls="reading-detail" aria-label="View device health details">
+              <div class="gauge-wrap"><svg class="metric-gauge device-gauge" viewBox="0 0 88 88" aria-hidden="true"><circle class="gauge-track" cx="44" cy="44" r="36"/><circle class="gauge-progress" id="device-gauge" cx="44" cy="44" r="36" style="stroke-dashoffset:0"/></svg><div class="gauge-reading"><span class="device-check" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="5" y="4" width="22" height="19" rx="3"/><path d="M11 28h10m-5-5v5m-5-15h10m-10 5h7"/></svg></span></div></div>
+              <div class="reading-info"><div class="reading-info-top"><p class="reading-label">Device</p><span class="reading-state neutral" id="device-state">Preview</span></div><p class="reading-value device-value" id="device-value">Sample only</p><p class="reading-foot" id="device-foot">No physical monitor connected</p><span class="mini-range"><i id="device-range" style="width:100%"></i></span></div>
+            </article>
+          </div>
+
+          <div class="lower-grid">
+            <section class="activity-panel" aria-labelledby="activity-title">
+              <div class="panel-heading"><div><h2 id="activity-title">Recent events</h2><p>Room and monitor events today</p></div><button class="link-button" data-go="history" type="button">See history <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+              <ol class="activity-list" id="recent-list">
+                <li><span class="event-icon quiet-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18.5 14.2A7.5 7.5 0 0 1 9.8 5.5a7.5 7.5 0 1 0 8.7 8.7Z"/></svg></span><span class="event-copy"><strong>Room check-in</strong><small>Temperature and humidity within demo range</small></span><time>2:14 PM</time></li>
+                <li><span class="event-icon light-event-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg></span><span class="event-copy"><strong>Light level changed</strong><small>Ambient light is now 42 lux</small></span><time>1:52 PM</time></li>
+                <li><span class="event-icon device-event-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><span class="event-copy"><strong>Monitor is online</strong><small>Connection restored</small></span><time>1:30 PM</time></li>
+              </ol>
+              <p class="empty-state recent-empty" id="recent-empty" role="status" aria-live="polite" hidden>No monitor events have been received for this device yet.</p>
+            </section>
+            <aside class="help-note"><span class="note-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg></span><h2>Prototype limits</h2><p>This is a classroom prototype, not a safety-certified monitor. Always maintain adult supervision.</p></aside>
+          </div>
+          <div class="demo-controls" id="demo-controls"><button class="button-secondary" id="simulate-alert" type="button">Simulate cry alert</button><span class="demo-hint">Sample event only · no audio is recorded</span></div>
+        </section>
+
+        <section class="screen" id="screen-history" aria-labelledby="history-title" hidden>
+          <div class="page-heading"><div><h1 id="history-title" tabindex="-1">Event history</h1><p class="page-subtitle" id="history-subtitle">Review sample readings and monitor events.</p></div></div>
+          <section class="trend-panel" aria-labelledby="trend-title">
+            <div class="trend-heading"><div><h2 id="trend-title">Reading trends</h2><p id="trend-description-label">Illustrative sample values · no device history connected</p></div><div class="trend-controls"><label><span class="visually-hidden">Choose reading</span><select id="trend-metric"><option value="temperature">Temperature</option><option value="humidity">Humidity</option></select></label><label><span class="visually-hidden">Choose time range</span><select id="trend-period"><option value="day">Past 24 hours</option><option value="week">Past 7 days</option></select></label></div></div>
+            <svg class="trend-chart" id="trend-chart" viewBox="0 0 720 190" role="img" aria-labelledby="trend-chart-title trend-chart-description">
+              <title id="trend-chart-title">Illustrative temperature trend over the past 24 hours</title><desc id="trend-chart-description">Example values only. No measurements from a connected monitor.</desc>
+              <path class="trend-grid" d="M36 30H700M36 75H700M36 120H700M36 160H700"/><polyline class="trend-line" id="trend-line" points="36,112 169,104 302,96 435,100 568,88 700,88"/><circle class="trend-point" id="trend-point" cx="700" cy="88" r="5"/>
+              <text x="36" y="182" id="trend-start-label">24 hours ago</text><text x="700" y="182" text-anchor="end" id="trend-end-label">Now</text>
+            </svg>
+            <p class="trend-summary" id="trend-summary" role="status" aria-live="polite">Sample temperature: 22.8–23.4 °C over 24 hours. Latest example: 23.4 °C.</p>
+            <p class="trend-empty empty-state" id="trend-empty" role="status" aria-live="polite" hidden>No readings are available for this metric and time range.</p>
+          </section>
+          <div class="history-tools"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="visually-hidden">Search event history</span><input id="history-search" type="search" placeholder="Search events…" /></label><label class="select-box"><span class="visually-hidden">Filter history</span><select id="history-filter"><option value="all">All events</option><option value="cry">Cry alerts</option><option value="room">Room readings</option><option value="device">Device status</option><option value="pending">Alerts needing review</option></select></label></div>
+          <section class="history-panel"><div class="history-date"><span>Today</span><span id="history-date"></span></div><ol class="history-list" id="history-list">
+            <li data-kind="room"><span class="event-icon quiet-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18.5 14.2A7.5 7.5 0 0 1 9.8 5.5a7.5 7.5 0 1 0 8.7 8.7Z"/></svg></span><span class="event-copy"><strong>Room check-in</strong><small>Temperature 23.4 °C · Humidity 56%</small></span><time>2:14 PM</time></li>
+            <li data-kind="room"><span class="event-icon light-event-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg></span><span class="event-copy"><strong>Light level changed</strong><small>Ambient light is now 42 lux</small></span><time>1:52 PM</time></li>
+            <li data-kind="device"><span class="event-icon device-event-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><span class="event-copy"><strong>Monitor is online</strong><small>Connection restored</small></span><time>1:30 PM</time></li>
+          </ol><p class="empty-state" id="history-empty" role="status" aria-live="polite" hidden>No events match these filters.</p></section>
+          <p class="demo-footnote" id="history-footnote">History entries use sample data.</p>
+        </section>
+
+        <section class="screen" id="screen-settings" aria-labelledby="settings-title" hidden>
+          <div class="page-heading"><div><h1 id="settings-title" tabindex="-1">Alert settings</h1><p class="page-subtitle">Set preview ranges and data freshness preferences.</p></div></div>
+          <section class="settings-panel connection-panel"><h2>Monitor connection</h2><p class="settings-description">Connect this browser to the authenticated FastAPI service, or keep using sample preview data.</p>
+            <div class="connection-state" id="connection-state"><span class="connection-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7h7M8.5 10h7M8.5 16.5h3"/></svg></span><span><strong id="connection-state-title">No live device connection</strong><small id="connection-state-detail">Sample readings are generated in this browser.</small></span><span class="connection-tag" id="connection-tag">Preview</span></div>
+            <div class="api-connection-form" aria-labelledby="api-connection-title"><h3 id="api-connection-title">Connect to backend</h3><p>Use the app bearer token from the backend configuration. Keep the device token on the board.</p>
+              <label for="api-base-url">Backend URL</label><input id="api-base-url" type="url" inputmode="url" autocomplete="url" value="http://127.0.0.1:8000" />
+              <label for="api-device-id">Device ID</label><input id="api-device-id" type="text" autocomplete="off" value="rt-spark-01" />
+              <label for="api-app-token">App bearer token</label><input id="api-app-token" type="password" autocomplete="off" spellcheck="false" placeholder="Enter token from MONITOR_APP_TOKEN" />
+              <div class="connection-actions"><button class="button-primary" id="connect-api" type="button">Connect dashboard</button><button class="button-secondary" id="use-preview-mode" type="button">Use sample preview</button></div>
+              <p class="connection-feedback" id="connection-feedback" role="status" aria-live="polite">The token stays in page memory and clears when you close or reload this page.</p>
+              <p class="connection-security">This browser connection is for local or trusted development use. A shared public site needs a server-side authenticated proxy.</p>
+            </div>
+            <details class="connection-guide"><summary>Setup and recovery steps</summary><ol><li>Start the FastAPI service and set <code>MONITOR_APP_TOKEN</code>. The default local URL is shown above.</li><li>Enter the same app token and a device ID registered with the backend.</li><li>Configure the board with its separate device token and send telemetry. The dashboard uses server-received timestamps.</li></ol><p>If connection fails, check the backend health, app token, device ID, and allowed browser origin in <code>MONITOR_ALLOWED_ORIGINS</code>. For LAN access, use a trusted HTTPS certificate. If readings stop, check board power and Wi-Fi, then the service logs.</p></details>
+          </section>
+          <section class="settings-panel"><h2>Room range alerts</h2><p class="settings-description">Display thresholds for sample data, not safety guidance.</p>
+            <div class="range-setting"><div><label for="temp-min">Temperature range</label><p>Mark sample readings outside this range.</p></div><div class="range-fields"><input id="temp-min" aria-label="Minimum temperature in degrees Celsius" type="number" min="0" max="50" step="1" value="18" /><span>to</span><input id="temp-max" aria-label="Maximum temperature in degrees Celsius" type="number" min="0" max="50" step="1" value="30" /><small>°C</small></div></div>
+            <div class="range-setting"><div><label for="humidity-min">Humidity range</label><p>Mark sample readings outside this range.</p></div><div class="range-fields"><input id="humidity-min" aria-label="Minimum humidity percentage" type="number" min="0" max="100" step="1" value="30" /><span>to</span><input id="humidity-max" aria-label="Maximum humidity percentage" type="number" min="0" max="100" step="1" value="70" /><small>%</small></div></div>
+          </section>
+          <section class="settings-panel"><h2>Data freshness</h2><p class="settings-description">Sample age starts when this preview opens or refreshes. Live age uses the backend’s received timestamp; set the limit above the board’s verified publish interval.</p>
+            <div class="range-setting freshness-setting"><div><label for="stale-after">Mark readings stale after</label><p>Used for sample and connected-device readings.</p></div><label class="select-box freshness-select"><span class="visually-hidden">Reading stale timeout</span><select id="stale-after"><option value="30">30 seconds</option><option value="60">1 minute</option><option value="120" selected>2 minutes</option><option value="300">5 minutes</option></select></label></div>
+          </section>
+          <section class="settings-panel"><h2>Notifications and quiet hours</h2><p class="settings-description">Preview controls; no notifications or sounds are sent.</p>
+            <label class="toggle-row"><span><strong>Cry alert notifications</strong><small>Preference for simulated cry alerts.</small></span><input id="notify-cry" type="checkbox" checked /><span class="toggle-track" aria-hidden="true"></span></label>
+            <label class="toggle-row"><span><strong>Environmental alerts</strong><small>Preference for sample room readings.</small></span><input id="notify-environment" type="checkbox" checked /><span class="toggle-track" aria-hidden="true"></span></label>
+            <label class="toggle-row"><span><strong>Quiet hours</strong><small>Shows a quiet-hours label in this preview.</small></span><input id="quiet-hours" type="checkbox" /><span class="toggle-track" aria-hidden="true"></span></label>
+          </section>
+          <div class="settings-actions"><button class="button-primary" id="save-settings" type="button">Save settings</button><span id="settings-saved" role="status" aria-live="polite"></span></div>
+          <section class="restart-panel"><div><h2>Device controls</h2><p>Restart is available when an RT-Spark board is connected.</p></div><button class="button-secondary" id="restart-device" type="button" disabled>Restart unavailable</button></section>
+        </section>
+
+        <footer class="page-footer"><span>Little Monitor · Classroom preview</span><span id="footer-data-mode">Room values use sample data</span></footer>
+      </main>
+
+      <nav class="mobile-nav" aria-label="Main navigation">
+        <button class="mobile-nav-item active" data-screen="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5v9a1 1 0 0 1-1 1h-5v-6h-5v6H4.5a1 1 0 0 1-1-1z"/></svg><span>Overview</span></button>
+        <button class="mobile-nav-item" data-screen="history"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16M4 12h16M4 18.5h10"/><circle cx="3.8" cy="5.5" r=".7"/><circle cx="3.8" cy="12" r=".7"/><circle cx="3.8" cy="18.5" r=".7"/></svg><span>History</span></button>
+        <button class="mobile-nav-item" data-screen="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="m19.4 13.8 1.2.9-1.5 2.6-1.4-.6a8 8 0 0 1-1.8 1l-.2 1.5h-3l-.2-1.5a8 8 0 0 1-1.8-1l-1.4.6-1.5-2.6 1.2-.9a7 7 0 0 1 0-2l-1.2-.9 1.5-2.6 1.4.6a8 8 0 0 1 1.8-1l.2-1.5h3l.2 1.5a8 8 0 0 1 1.8 1l1.4-.6 1.5 2.6-1.2.9a7 7 0 0 1 0 2Z" transform="translate(-1.1 -1.1) scale(1.09)"/></svg><span>Settings</span></button>
+      </nav>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog class="reading-dialog" id="reading-detail" aria-labelledby="reading-detail-title" aria-describedby="reading-detail-description">
+      <div class="reading-dialog-card">
+        <button class="dialog-close" id="close-reading-detail" type="button" aria-label="Close reading details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <h2 id="reading-detail-title">Temperature</h2>
+        <p class="dialog-current"><strong id="reading-detail-value">23.4</strong><small id="reading-detail-unit">°C</small><span class="reading-state good" id="reading-detail-state">In range</span></p>
+        <svg class="detail-chart" viewBox="0 0 360 120" role="img" aria-label="Illustrative sample trend over recent readings">
+          <path class="chart-grid" d="M8 20H352M8 55H352M8 90H352" />
+          <path class="chart-area" id="detail-chart-area" d="M8 78 C42 76 52 47 88 51 S126 78 160 65 S214 37 242 47 S296 81 352 34 V108 H8Z" />
+          <path class="chart-line" id="detail-chart-line" d="M8 78 C42 76 52 47 88 51 S126 78 160 65 S214 37 242 47 S296 81 352 34" />
+          <circle class="chart-point" id="detail-chart-point" cx="352" cy="34" r="5" />
+        </svg>
+        <p id="reading-detail-description">This measurement is inside your saved demo range.</p>
+        <button class="button-secondary detail-settings-link" id="detail-settings-link" type="button" hidden>Review sample ranges</button>
+        <p class="chart-caption">Illustrative preview trend · not historical device data</p>
+      </div>
+    </dialog>
+  </body>
+</html>

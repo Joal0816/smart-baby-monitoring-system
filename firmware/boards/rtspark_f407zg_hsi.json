@@ -1,0 +1,28 @@
+{
+  "name": "RT-Spark F407ZG HSI foundation (hardware unverified)",
+  "vendor": "RT-Thread",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f407zg.html",
+  "build": {
+    "cpu": "cortex-m4",
+    "mcu": "stm32f407zgt6",
+    "product_line": "STM32F407xx",
+    "f_cpu": "16000000L",
+    "extra_flags": "-DSTM32F407xx",
+    "stm32cube": {
+      "startup_file": "startup_stm32f407xx.S",
+      "system_file": "system_stm32f4xx.c",
+      "disable_embedded_libs": "yes",
+      "custom_dsp_library": "yes"
+    }
+  },
+  "frameworks": ["stm32cube"],
+  "platforms": ["ststm32"],
+  "debug": {
+    "openocd_target": "stm32f4x",
+    "svd_path": "STM32F40x.svd"
+  },
+  "upload": {
+    "maximum_size": 1048576,
+    "maximum_ram_size": 131072
+  }
+}

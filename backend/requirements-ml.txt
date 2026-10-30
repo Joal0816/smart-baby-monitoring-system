@@ -1,0 +1,4 @@
+-r requirements.txt
+tensorflow-cpu==2.19.0
+tensorflow-hub==0.16.1
+numpy==2.1.3

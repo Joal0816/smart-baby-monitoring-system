@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="logo-title logo-description">
+  <title id="logo-title">Little Monitor</title>
+  <desc id="logo-description">A listening signal above a small cradle.</desc>
+  <rect width="48" height="48" rx="16" fill="#7563ee"/>
+  <rect x="6.5" y="6.5" width="35" height="35" rx="10.5" fill="#202548" stroke="#b9adff" stroke-width="1.8"/>
+  <circle cx="24" cy="13.8" r="2.2" fill="#ff9a91"/>
+  <path d="M19.2 17.3a6.5 6.5 0 0 1 9.6 0M15.5 20.6a11.5 11.5 0 0 1 17 0" fill="none" stroke="#75e5d3" stroke-linecap="round" stroke-width="2.2"/>
+  <path d="M14 24.5v4.8a5.2 5.2 0 0 0 5.2 5.2h9.6a5.2 5.2 0 0 0 5.2-5.2v-4.8M18 35v2m12-2v2" fill="none" stroke="#ffd36f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
+</svg>
